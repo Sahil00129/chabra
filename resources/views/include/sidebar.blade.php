@@ -13,7 +13,7 @@
                         </a>
                         <ul class="collapse submenu list-unstyled show" id="dashboard" data-parent="#accordionExample">
                             <li class="active">
-                                <a href="index.html"> Sales </a>
+                                <a href="{{url('home')}}"> Sales </a>
                             </li>
                         </ul>
                     </li>
