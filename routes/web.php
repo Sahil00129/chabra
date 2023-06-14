@@ -38,5 +38,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('posts', PostController::class);
 
     Route::get('loan-finance', [LoanFinanceController::class,'loanfinance']);
+    Route::any('store-loan-detail', [LoanFinanceController::class,'storeLoanFinanceDetails']);
+    Route::get('loan-list', [LoanFinanceController::class,'loanList']);
+
 
 });
