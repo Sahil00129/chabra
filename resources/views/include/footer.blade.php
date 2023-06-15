@@ -36,7 +36,7 @@
       
                 $("#loan_finance").validate({
                     rules: {
-                        customer_name: {
+                        name: {
                             required: true,
                             maxlength: 50
                         },
@@ -50,7 +50,7 @@
                         },
                     },
                     messages: {
-                        customer_name: {
+                        name: {
                             required: "Please enter customer name",
                             maxlength: "Your name maxlength should be 50 characters long."
                         },
