@@ -19,7 +19,7 @@ class LoanFinanceController extends Controller
         try {
             DB::beginTransaction();
         $validatedData = $request->validate([
-            'customer_name' => 'required',
+            'name' => 'required',
             'father_name' => 'required',
             'contact_no' => 'required',
         ]);
