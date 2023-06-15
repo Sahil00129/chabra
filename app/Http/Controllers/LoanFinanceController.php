@@ -37,6 +37,10 @@ class LoanFinanceController extends Controller
         $loansave['emi_amount'] = $request->emi_amount;
         $loansave['emi_date'] = $request->emi_date;
         $loansave['rate_of_interest'] = $request->rate_of_interest;
+
+        $pending_amount = $request->no_of_emi * $request->emi_amount;
+        $loansave['received_amount'] = 0;
+        $loansave['pending_amount'] = $pending_amount;
         $loansave['status'] = 1;
 
         $saveloandetails = Loan::create($loansave);
