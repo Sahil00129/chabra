@@ -27,6 +27,9 @@
                             <li>
                                 <a href="{{url('loan-list')}}"> Loan List</a>
                             </li>
+                            <li>
+                                <a href="{{url('loan-emis')}}"> Loan EMIs</a>
+                            </li>
                            
                         </ul>
                     </li>
