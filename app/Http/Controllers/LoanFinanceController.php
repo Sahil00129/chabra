@@ -91,10 +91,17 @@ class LoanFinanceController extends Controller
             $updatdetails = Loan::where('id', $request->loan_id)->update(['pending_amount' => $pending_amount, 'received_amount' => $received_amount]);
 
             if ($updatdetails) {
+                $last_month_date = LoanEmi::where('loan_id',$request->loan_id)->orderBy('id','desc')->first();
+                if(!empty($last_month_date)){
+                    $last_date = $last_month_date->emi_date;
+                    $emi_date = date("Y-m-d", strtotime($last_date. ' + 1 month'));
+                }else{
+                    $emi_date = $lona_details->emi_date;
+                }
 
                 $loanemisave['loan_id'] = $request->loan_id;
                 $loanemisave['emi_amount'] = $lona_details->emi_amount;
-                $loanemisave['emi_date'] = $lona_details->emi_date;
+                $loanemisave['emi_date'] = $emi_date;
                 $loanemisave['status'] = 1;
                 $savecustomerdetails = LoanEmi::create($loanemisave);
 

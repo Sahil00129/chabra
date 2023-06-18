@@ -23,12 +23,40 @@
                     </thead>
                     <tbody>
                         @foreach($loan_details as $loan)
+
                         <tr>
                             <td>{{$loan->Customer->name ?? "-"}}</td>
                             <td>{{$loan->emi_amount ?? "-"}}</td>
-                            <td>{{$loan->emi_date ?? "-"}}</td>
+                            <?php $last_emi_date = DB::table('loan_emis')->where('loan_id', $loan->id)->orderBy('id', 'desc')->first();
+                                if (empty($loan->LoanEmi)) {
+                                    $current_month = date('m');
+                                    if(!empty($last_emi_date)){
+                                        $current_month = date('m');
+                                        $emi_date = $last_emi_date->emi_date;
+                                        $date_explode = explode('-', $emi_date);
+                                        $emi_date = $date_explode[0].'-'. $current_month.'-'. $date_explode[2];
+                                    }else{
+                                        $emi_date = $loan->emi_date;
+                                    }
+                                    // $emi_date = $last_emi_date->emi_date;
+                                    // $date_explode = explode('-', $emi_date);
+                                    // $emi_date = $date_explode[0].'-'. $current_month.'-'. $date_explode[2];
+                                } else {
+                                    if(!empty($last_emi_date)){
+                                        $current_month = date('m');
+                                        $emi_date = $last_emi_date->emi_date;
+                                        $date_explode = explode('-', $emi_date);
+                                        $emi_date = $date_explode[0].'-'. $current_month.'-'. $date_explode[2];
+                                    }else{
+                                        $emi_date = $loan->emi_date;
+                                    }
+                                    
+                                }
+                                ?>
+                            <td>{{$emi_date ?? "-"}}</td>
                             @if(empty($loan->LoanEmi))
-                            <td><button type="button" class="btn btn-danger pending_emi" value="{{$loan->id}}">Pending</button></td>
+                            <td><button type="button" class="btn btn-danger pending_emi"
+                                    value="{{$loan->id}}">Pending</button></td>
                             @else
                             <td><button type="button" class="btn btn-success">Received</button></td>
                             @endif
@@ -64,7 +92,7 @@
             </div>
             <!-- Modal body -->
             <div class="modal-body">
-            <input type="hidden" id="loan_id" name="loan_id" >
+                <input type="hidden" id="loan_id" name="loan_id">
                 <div class="Delt-content text-center">
                     <p class="confirmtext">Are You Sure You have Received EMIs ?</p>
                 </div>
@@ -97,15 +125,14 @@ $(document).on('click', '.received_emis', function() {
         data: {
             loan_id: loan_id
         },
-        beforeSend: 
-            function() {
-               
-            },
+        beforeSend: function() {
+
+        },
         success: function(data) {
-            if(data.success == true) {
+            if (data.success == true) {
                 alert(data.success_message);
                 window.location.reload();
-            }else{
+            } else {
                 alert(data.error_message);
             }
 
