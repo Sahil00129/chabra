@@ -19,11 +19,6 @@ class LoanFinanceController extends Controller
     {
         try {
             DB::beginTransaction();
-            $validatedData = $request->validate([
-                'name' => 'required',
-                'father_name' => 'required',
-                'contact_no' => 'required',
-            ]);
 
             $customersave['name'] = $request->name;
             $customersave['father_name'] = $request->father_name;
@@ -123,5 +118,11 @@ class LoanFinanceController extends Controller
         }
         return response()->json($response);
 
+    }
+    public function viewEmisList($id)
+    {
+
+        $Emi_details = LoanEmi::where('loan_id', $id)->get();
+        return view('pages.view-emis-list', ['Emi_details' => $Emi_details]);
     }
 }

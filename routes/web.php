@@ -42,6 +42,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('loan-list', [LoanFinanceController::class,'loanList']);
     Route::get('loan-emis', [LoanFinanceController::class,'loanEmi']);
     Route::any('emi-received', [LoanFinanceController::class,'emiReceived']);
-
+    Route::any('view-emis-list/{id}', [LoanFinanceController::class, 'viewEmisList']);
 
 });
